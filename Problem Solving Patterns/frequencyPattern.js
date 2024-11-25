@@ -127,7 +127,62 @@ function countUniqueValues(arr) {
   return ++i;
 }
 
-console.log(countUniqueValues([1, 1, 1, 1, 1, 2])); // 2
-console.log(countUniqueValues([1, 2, 3, 4, 4, 4, 7, 7, 12, 12, 13])); // 7
-console.log(countUniqueValues([])); // 0
-console.log(countUniqueValues([-2, -1, -1, 0, 1])); // 4
+// console.log(countUniqueValues([1, 1, 1, 1, 1, 2])); // 2
+// console.log(countUniqueValues([1, 2, 3, 4, 4, 4, 7, 7, 12, 12, 13])); // 7
+// console.log(countUniqueValues([])); // 0
+// console.log(countUniqueValues([-2, -1, -1, 0, 1])); // 4
+
+// SLIDING WINDOW PATTERN
+function maxSubArraySum(arr, num) {
+  if (arr.length === 0) return null;
+
+  let maxsum = 0; // max sum possible
+  let tempsum = 0; // current sum
+
+  // calculating sum of first n(num) elements in array(arr)
+  for (let i = 0; i < num; i++) {
+    maxsum += arr[i];
+  }
+
+  // saving temp sum as max sum
+  tempsum = maxsum;
+
+  // looping over next n(num) elements in array
+  for (let i = num; i < arr.length; i++) {
+    // subtracting prev n from arr and adding next n from arr
+    // [1,2,3,4]
+    // 1+2+3 = 6 (1+2+3)
+    // 2 + 3 - 1 + 4 = 2 + 3 + 4 = 9
+    tempsum = tempsum - arr[i - num] + arr[i];
+
+    // checking if current sum is greater than 'maxsum'.
+    // if YES, saving current sum as 'maxsum'
+    maxsum = Math.max(maxsum, tempsum);
+  }
+
+  // return the maxsum
+  return maxsum;
+}
+
+// console.log(maxSubArraySum([1, 10, 3, 4, 5], 2));
+
+function search(arr, val) {
+  let min = 0;
+  let max = arr.length - 1;
+
+  while (min <= max) {
+    let middle = Math.floor((max + min) / 2);
+
+    if (arr[middle] < val) {
+      min = middle + 1;
+    } else if (arr[middle] > val) {
+      max = middle - 1;
+    } else return middle; // zero based position
+  }
+
+  return -1;
+}
+
+console.log(
+  search([1, 2, 3, 4, 5, 65, 78, 94, 125, 235, 458, 965, 1212, 5454], 1212)
+);
