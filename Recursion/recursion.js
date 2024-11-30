@@ -94,5 +94,80 @@ function reverse2(str) {
   return reverse2(str.slice(1)) + str[0];
 }
 
-console.log(reverse2("awesome")); // 'emosewa'
-console.log(reverse2("rithmschool")); // 'loohcsmhtir'
+// console.log(reverse2("awesome")); // 'emosewa'
+// console.log(reverse2("rithmschool")); // 'loohcsmhtir'
+
+function isPalindrome(str) {
+  if (str[0] !== str[str.length - 1]) return false;
+
+  if (str.length <= 1) return true;
+
+  return isPalindrome(str.slice(1, -1));
+}
+
+// console.log(isPalindrome("awesome")); // false
+// console.log(isPalindrome("foobar")); // false
+// console.log(isPalindrome("tacocat")); // true
+// console.log(isPalindrome("amanaplanacanalpanama")); // true
+// console.log(isPalindrome("amanaplanacanalpandemonium")); // false
+
+const isOdd = (val) => val % 2 !== 0;
+
+function someRecursive(arr, condition) {
+  if (arr.length === 0) return false;
+
+  if (condition(arr[0])) return true;
+
+  return someRecursive(arr.slice(1), condition);
+}
+
+// console.log(someRecursive([1, 2, 3, 4], isOdd)); // true
+// console.log(someRecursive([4, 6, 8, 9], isOdd)); // true
+// console.log(someRecursive([4, 6, 8], isOdd)); // false
+// console.log(someRecursive([4, 6, 8], (val) => val > 10)); // false
+
+function flatten(arr) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      newArr = newArr.concat(flatten(arr[i]));
+    } else newArr.push(arr[i]);
+  }
+  return newArr;
+}
+
+// console.log(flatten([1, 2, 3, [4, 5]])); // [1, 2, 3, 4, 5]
+// console.log(flatten([1, [2, [3, 4], [[5]]]])); // [1, 2, 3, 4, 5]
+// console.log(flatten([[1], [2], [3]])); // [1,2,3]
+// console.log(flatten([[[[1], [[[2]]], [[[[[[[3]]]]]]]]]])); // [1,2,3]
+
+function capitalizeFirst(arr) {
+  if (arr.length === 1) return [arr[0][0].toUpperCase() + arr[0].slice(1)];
+
+  const res = capitalizeFirst(arr.slice(0, -1));
+
+  const string =
+    arr.slice(arr.length - 1)[0][0].toUpperCase() +
+    arr.slice(arr.length - 1)[0].substr(1);
+
+  res.push(string);
+
+  return res;
+}
+
+// console.log(capitalizeFirst(["car", "taco", "banana"])); // ['Car','Taco','Banana']
+
+function capitalizeWords(arr) {
+  if (arr.length === 1) return [arr[0].toUpperCase()];
+
+  const res = capitalizeWords(arr.slice(0, -1));
+
+  const string = arr.slice([arr.length - 1])[0].toUpperCase();
+
+  res.push(string);
+
+  return res;
+}
+
+let words = ["i", "am", "learning", "recursion"];
+console.log(capitalizeWords(words)); // ['I', 'AM', 'LEARNING', 'RECURSION']
