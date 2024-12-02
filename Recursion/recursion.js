@@ -170,4 +170,169 @@ function capitalizeWords(arr) {
 }
 
 let words = ["i", "am", "learning", "recursion"];
-console.log(capitalizeWords(words)); // ['I', 'AM', 'LEARNING', 'RECURSION']
+// console.log(capitalizeWords(words)); // ['I', 'AM', 'LEARNING', 'RECURSION']
+
+// [0,0,0,0,0]
+// [-1,0,0,0,0,0,1]
+
+//
+
+var findMedianSortedArrays = function (nums1, nums2) {
+  const newArr = nums1.concat(nums2).sort((a, b) => a - b);
+
+  console.log(newArr);
+  console.log(newArr.length);
+  // console.log(newArr[6], newArr[7]);
+  console.log(newArr.length % 2 !== 0);
+  console.log(Math.ceil(newArr.length / 2) - 1);
+  if (newArr.length === 1) return newArr[0];
+
+  let median;
+
+  if (newArr.length % 2 !== 0) {
+    console.log("this cond");
+    median = newArr[Math.floor(newArr.length / 2)];
+  } else {
+    median =
+      (newArr[Math.ceil(newArr.length / 2) - 1] + newArr[newArr.length / 2]) /
+      2;
+  }
+
+  return median;
+};
+
+// console.log(findMedianSortedArrays([0, 0, 0, 0, 0], [-1, 0, 0, 0, 0, 0, 1]));
+// console.log(findMedianSortedArrays([2, 2, 4, 4], [2, 2, 2, 4, 4]));
+// console.log(findMedianSortedArrays([3], [-2, -1]));
+
+// function nestedEvenSum(obj, sum = 0) {
+//   let newSum = sum;
+//   const entries = Object.entries(obj);
+//   const total = entries.length;
+//   console.log("Total: ", total);
+//   let index = 0;
+//   if (index === total) return 0;
+
+//   for (const [key, value] of entries) {
+//     if (typeof value === "number" && value % 2 === 0) {
+//       newSum += value;
+//       index++;
+//       console.log("Value:", value);
+//       console.log("New Sum: ", newSum);
+//     } else if (typeof value !== "number" && typeof value !== "object") {
+//       return 0;
+//     } else {
+//       console.log(`Object: { ${key}: ${value} }`);
+//       index++;
+//       newSum += nestedEvenSum(value, newSum);
+//     }
+//   }
+
+//   return newSum;
+// }
+
+function nestedEvenSum(obj, sum = 0) {
+  let newSum = sum;
+  for (let key in obj) {
+    if (typeof obj[key] === "object") {
+      newSum += nestedEvenSum(obj[key], sum);
+    } else if (typeof obj[key] === "number" && obj[key] % 2 === 0)
+      newSum += obj[key];
+  }
+  return newSum;
+}
+
+var obj1 = {
+  outer: 2,
+  obj: {
+    inner: 2,
+    otherObj: {
+      superInner: 2,
+      notANumber: true,
+      alsoNotANumber: "yup",
+    },
+  },
+};
+
+var obj2 = {
+  a: 2,
+  b: { b: 2, bb: { b: 3, bb: { b: 2 } } },
+  c: { c: { c: 2 }, cc: "ball", ccc: 5 },
+  d: 1,
+  e: { e: { e: 2 }, ee: "car" },
+};
+
+// console.log(nestedEvenSum(obj1)); // 6
+// console.log(nestedEvenSum(obj2)); // 10
+
+function stringifyNumbers(obj) {
+  let newObj = {};
+  for (let key in obj) {
+    if (typeof obj[key] === "number") {
+      newObj[key] = obj[key].toString();
+    } else if (typeof obj[key] === "object" && !Array.isArray(obj[key])) {
+      newObj[key] = stringifyNumbers(obj[key]);
+    } else {
+      newObj[key] = obj[key];
+    }
+  }
+  return newObj;
+}
+
+// let obj = {
+//   num: 1,
+//   test: [],
+//   data: {
+//     val: 4,
+//     info: {
+//       isRight: true,
+//       random: 66,
+//     },
+//   },
+// };
+
+// console.log(stringifyNumbers(obj));
+
+// {
+//     num: "1",
+//     test: [],
+//     data: {
+//         val: "4",
+//         info: {
+//             isRight: true,
+//             random: "66"
+//         }
+//     }
+// }
+
+function collectStrings(obj) {
+  let strArray = [];
+
+  for (let key in obj) {
+    if (typeof obj[key] === "string") {
+      strArray.push(obj[key]);
+    } else if (typeof obj[key] === "object") {
+      strArray = strArray.concat(collectStrings(obj[key]));
+    }
+  }
+
+  return strArray;
+}
+
+const obj = {
+  stuff: "foo",
+  data: {
+    val: {
+      thing: {
+        info: "bar",
+        moreInfo: {
+          evenMoreInfo: {
+            weMadeIt: "baz",
+          },
+        },
+      },
+    },
+  },
+};
+
+// console.log(collectStrings(obj)); // ["foo", "bar", "baz"])
