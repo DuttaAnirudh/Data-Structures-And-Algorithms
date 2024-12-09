@@ -6,10 +6,11 @@ function insertionSort(arr) {
     for (let j = i - 1; j >= 0 && arr[j] > currentVal; j--) {
       arr[j + 1] = arr[j];
       index = j;
-      console.log(arr);
+      console.log("Inner Loop", arr);
     }
     arr[index] = currentVal;
-    // console.log(arr);
+    console.log("UPDATE: -----");
+    console.log(arr);
   }
   return arr;
 }
